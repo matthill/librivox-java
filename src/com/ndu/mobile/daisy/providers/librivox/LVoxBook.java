@@ -1,34 +1,24 @@
 package com.ndu.mobile.daisy.providers.librivox;
 
+import com.ndu.mobile.daisy.providers.ParsedObject;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-
-import com.ndu.mobile.daisy.providers.ParsedObject;
-
 public class LVoxBook extends ParsedObject implements Serializable 
 {
-	public static final int UNKNOWN = -1;
 	
 	private static final long serialVersionUID = -5021054789409657400L;
 
 	
 	private String title;
-	private List<LVoxAuthor> authors = new ArrayList<LVoxAuthor>(5);
-
+	private List<String> authors = new ArrayList<String>(5);
 	private String description;
-	private String archiveOrgURL;
-	private String zipfile;
-	private int NumberOfSections = UNKNOWN;
-	private String url;
-	private String urlRss;
-	private int id = UNKNOWN;
-	private String totaltime;
-	private long totaltimeseconds;
+	private String id = "";
 
 
 
@@ -41,61 +31,31 @@ public class LVoxBook extends ParsedObject implements Serializable
 	        eventType = xpp.getEventType();
         	 if(eventType == XmlPullParser.START_TAG) {
 
-	        	 if (xpp.getName().equalsIgnoreCase("title"))
+	        	 if (xpp.getName().equalsIgnoreCase("str") && xpp.getAttributeCount() > 0&& xpp.getAttributeValue(0).equals("title"))
 	        	 {
 	        		 title = parseStringVal(xpp);	        		 
 	        		 
 	        	 }
-	        	 else if (xpp.getName().equalsIgnoreCase("authors"))
+	        	 else if (xpp.getName().equalsIgnoreCase("arr") && xpp.getAttributeCount() > 0&& xpp.getAttributeValue(0).equals("creator"))
 	        	 {
 	        		 parseAuthors(xpp);
 	        	 }
-	        	 else if (xpp.getName().equalsIgnoreCase("description"))
+	        	 else if (xpp.getName().equalsIgnoreCase("str") && xpp.getAttributeCount() > 0 && xpp.getAttributeValue(0).equalsIgnoreCase("description"))
 	        	 {
 	        		 description = parseStringVal(xpp);
 	        	 }
-	        	 else if (xpp.getName().equalsIgnoreCase("url_iarchive"))
+	        	 else if (xpp.getName().equalsIgnoreCase("str") && xpp.getAttributeCount() > 0 && xpp.getAttributeValue(0).equalsIgnoreCase("identifier"))
 	        	 {
-	        		 archiveOrgURL = parseStringVal(xpp);
-	        	 }
-	        	 else if (xpp.getName().equalsIgnoreCase("sections"))
-	        	 {
-	        		 NumberOfSections = parseNumVal(xpp);
-	        	 }
-	        	 else if (xpp.getName().equalsIgnoreCase("url_librivox"))
-	        	 {
-	        		 url = parseStringVal(xpp);
-	        	 }
-	        	 else if (xpp.getName().equalsIgnoreCase("url_rss"))
-	        	 {
-	        		 urlRss = parseStringVal(xpp);
-	        	 }
-	        	 else if (xpp.getName().equalsIgnoreCase("url_zip_file"))
-	        	 {
-	        		 zipfile = parseStringVal(xpp).trim();
-	        	 }
-	        	 else if (xpp.getName().equalsIgnoreCase("id"))
-	        	 {
-	        		 id = parseNumVal(xpp);
-	        	 }
-	        	 else if (xpp.getName().equalsIgnoreCase("totaltime"))
-	        	 {
-	        		 totaltime = parseStringVal(xpp);
-	        	 }
-	        	 else if (xpp.getName().equalsIgnoreCase("totaltimesecs"))
-	        	 {
-	        		 totaltimeseconds = parseNumVal(xpp);
+	        		 id = parseStringVal(xpp);
 	        	 }
 	         }
 			 if(eventType == XmlPullParser.END_TAG) {
-	             if (xpp.getName().equalsIgnoreCase("book"))
+	             if (xpp.getName().equalsIgnoreCase("doc"))
 	             {
 	            	 break;
 	             }
 	         }
-//			 if(eventType == XmlPullParser.TEXT) {
-//	             //System.out.println("Text "+xpp.getText());
-//	         }
+
 	         eventType = xpp.next();
        }
 	}
@@ -108,13 +68,13 @@ public class LVoxBook extends ParsedObject implements Serializable
 	        eventType = xpp.getEventType();
         	 if(eventType == XmlPullParser.START_TAG) {
 
-	        	 if (xpp.getName().equalsIgnoreCase("author"))
+	        	 if (xpp.getName().equalsIgnoreCase("str"))
 	        	 {
-	        		 authors.add(new LVoxAuthor(xpp));       		 
+	        		 authors.add(xpp.getText());
 	        	 }
 	         }
 			 if(eventType == XmlPullParser.END_TAG) {
-	             if (xpp.getName().equalsIgnoreCase("authors"))
+	             if (xpp.getName().equalsIgnoreCase("arr"))
 	             {
 	            	 break;
 	             }
@@ -135,71 +95,19 @@ public class LVoxBook extends ParsedObject implements Serializable
 	{
 		return title;
 	}
-	public List<LVoxAuthor> getAuthors()
+	public List<String> getAuthors()
 	{
 		return authors;
 	}
-
-
-
 	public String getDescription()
 	{
 		return description;
 	}
-
-
-
-	public String getArchiveOrgURL()
-	{
-		return archiveOrgURL;
-	}
-
-
-
-	public String getZipfile()
-	{
-		return zipfile;
-	}
-
-
-
-
-
-	public int getNumberOfSections()
-	{
-		return NumberOfSections;
-	}
-
-
-
-	public String getUrl()
-	{
-		return url;
-	}
-
-	
-	public int getId()
+	public String getId()
 	{
 		return id;
 	}
 
-
-	public String getTotaltime()
-	{
-		return totaltime;
-	}
-
-
-
-	public long getTotaltimeseconds()
-	{
-		return totaltimeseconds;
-	}
-
-	public String getUrlRss()
-	{
-		return urlRss;
-	}
 
 
 }

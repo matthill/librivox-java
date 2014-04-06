@@ -1,0 +1,35 @@
+package com.ndu.mobile.daisy.providers.librivox;
+
+public enum LibrivoxField {
+    AVG_RATING      { @Override  public String toString() {  return "avg_rating"; } },
+    CALL_NUMBER     { @Override  public String toString() {  return "call_number"; } },
+    COLLECTION      { @Override  public String toString() {  return "collection"; } },
+    CONTRIBUTOR     { @Override  public String toString() {  return "contributor"; } },
+    COVERAGE        { @Override  public String toString() {  return "coverage"; } },
+    CREATOR         { @Override  public String toString() {  return "creator"; } },
+    DATE            { @Override  public String toString() {  return "date"; } },
+    DESCRIPTION     { @Override  public String toString() {  return "description"; } },
+    DOWNLOADS       { @Override  public String toString() {  return "downloads"; } },
+    FOLDOUTCOUNT    { @Override  public String toString() {  return "foldoutcount"; } },
+    FORMAT          { @Override  public String toString() {  return "format"; } },
+    HEADER_IMAGE    { @Override  public String toString() {  return "headerImage"; } },
+    IDENTIFIER      { @Override  public String toString() {  return "identifier"; } },
+    IMAGECOUNT      { @Override  public String toString() {  return "imagecount"; } },
+    LANGUAGE        { @Override  public String toString() {  return "language"; } },
+    LICENSE_URL     { @Override  public String toString() {  return "licenseurl"; } },
+    MEDIA_TYPE      { @Override  public String toString() {  return "mediatype"; } },
+    MONTH           { @Override  public String toString() {  return "month"; } },
+    NUM_REVIEWS     { @Override  public String toString() {  return "num_reviews"; } },
+    OAI_UPDATEDATE  { @Override  public String toString() {  return "oai_updatedate"; } },
+    PUBLICDATE      { @Override  public String toString() {  return "publicdate"; } },
+    PUBLISHER       { @Override  public String toString() {  return "publisher"; } },
+    RIGHTS          { @Override  public String toString() {  return "rights"; } },
+    SCANNINGCENTER  { @Override  public String toString() {  return "scanningcentre"; } },
+    SOURCE          { @Override  public String toString() {  return "source"; } },
+    SUBJECT         { @Override  public String toString() {  return "subject"; } },
+    TITLE           { @Override  public String toString() {  return "title"; } },
+    TYPE            { @Override  public String toString() {  return "type"; } },
+    VOLUME          { @Override  public String toString() {  return "volume"; } },
+    WEEK            { @Override  public String toString() {  return "week"; } }
+
+}
