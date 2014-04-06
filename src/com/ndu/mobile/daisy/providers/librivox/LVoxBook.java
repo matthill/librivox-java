@@ -70,6 +70,7 @@ public class LVoxBook extends ParsedObject implements Serializable
 
 	        	 if (xpp.getName().equalsIgnoreCase("str"))
 	        	 {
+	    	         eventType = xpp.next();
 	        		 authors.add(xpp.getText());
 	        	 }
 	         }
@@ -98,6 +99,22 @@ public class LVoxBook extends ParsedObject implements Serializable
 	public List<String> getAuthors()
 	{
 		return authors;
+	}
+	public String getAuthor()
+	{
+		if (authors.size() == 0)
+			return "";
+		
+		StringBuilder authorString = new StringBuilder();
+		for (String author : authors)
+		{
+			authorString.append(author);
+			authorString.append(", ");
+		}
+		
+		authorString.delete(authorString.length() - 2, authorString.length());
+		
+		return authorString.toString();
 	}
 	public String getDescription()
 	{
